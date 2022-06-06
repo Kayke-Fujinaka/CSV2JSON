@@ -23,4 +23,4 @@ for (var i = 1; i < lines.length; i++) {
 }
 
 let json = JSON.stringify(result);
-fs.writeFileSync("output.json", json);
+fs.writeFileSync("output.json", json)
