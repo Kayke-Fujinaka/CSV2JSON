@@ -1,148 +1,82 @@
-// const fs = require("fs");
-// csv = fs.readFileSync("exemplo.csv")
+// Incluir o fs module
+const fs = require("fs");
+// O fs.createReadStream() é um método do fs para ler arquivos
+reader = fs.createReadStream("./CSV/exemplo.csv");
 
-// var array = csv.toString().split("\r");
+// Armazena o resultado da conversão
+let arr = [];
 
-// let result = [];
- 
-// let headers = array[0].split(", ")
+/* 
+A função on() serve para escutar os eventos do código a qual recebe dois arg
+- O primeiro é o nome do evento "data";
+- O segundo é uma função de callback (Ação realizadas cada vez que evento disparado) 
+*/
+reader.on("data", (chunk) => {
+  // Recebe o arquivo 'exemplo.csv' em string
+  let content = chunk.toString();
 
-// for (let i = 1; i < array.length - 1; i++) {
-//   let obj = {}
- 
-//   let str = array[i]
-//   let s = ''
- 
-//   let flag = 0
-//   for (let ch of str) {
-//     if (ch === '"' && flag === 0) {
-//       flag = 1
-//     }
-//     else if (ch === '"' && flag == 1) flag = 0
-//     if (ch === ', ' && flag === 0) ch = '|'
-//     if (ch !== '"') s += ch
-//   }
- 
-//   let properties = s.split("|")
- 
-//   for (let j in headers) {
-//     if (properties[j].includes(", ")) {
-//       obj[headers[j]] = properties[j]
-//         .split(", ").map(item => item.trim())
-//     }
-//     else obj[headers[j]] = properties[j]
-//   }
- 
-//   result.push(obj)
-// }
- 
-// let json = JSON.stringify(result);
-// fs.writeFileSync('output.json', json);
+  // Criamos um array que recebe o dado do csv até a quebra de linha
+  // (no caso define um array de dados por linha)
+  let splitted = content.split("\n");
 
-// ------------------------------------------------------------------------------
+  // Criamos um array que cada cabeçalho do csv
+  // (no caso define um array com os dados da primeira linha)
+  let header = content.split("\n")[0].split(",");
 
-// var fs = require('fs');
+  // Vai receber o push abaixo e colocar num Array
+  let teste = [];
 
-// function CSVToJSONConvertor() {
-//     if (!!process.argv[2]) {
-//         var buff = fs.readFileSync(process.argv[2] + './exemplo.csv', "utf8");
-//         // split to array
-//         var rowsArray = buff.split('\n');
-//         var row = '';
-//         var json = '';
-
-//         for (var i = 0; i < rowsArray.length; i++) {
-//             var commaPos = rowsArray[i].search(',');
-//             row += '"' + rowsArray[i].slice(0, commaPos) + '": "' + rowsArray[i].slice(commaPos + 1).replace(/^"/,'').replace(/"$/, '') + '",\n';
-//         }
-
-//         // add '{}', cut ',\n'
-
-//         json = '{\n' + row.slice(0,-2) + '\n}\n';
-        
-//         fs.writeFileSync(process.argv[2] + '.json', json, "utf8");
-//     } else {
-//         console.log('enter csv file');
-//     }
-// }
-
-// CSVToJSONConvertor()
-
-// -----------------------------------------------------------
-
-const readline = require('readline');
-const fs = require('fs');
-
-var isTrue = true;
-const rl = readline.createInterface({
-  input: fs.createReadStream('exemplo.csv')
-});
-var header;
-var jsObj;
-var jsonResult = {};
-
-var countryName;
-var year;
-
-//read a single line
-rl.on('line', function (line) {
-
-  if(isTrue){
-      header = line.split(',');
-      isTrue = false;
+  // Um for que vai iterar linha por linha do splitted que é o Array com os dados
+  for (let i = 0; i < splitted.length; i++) {
+    // Ele vai empurrar para o 'teste' e dividir as string a cada vírgula
+    teste.push(splitted[i].split(","));
+    for (let index = 0; index < header.length; index++) {}
   }
-  else {
-    var commaRemoved = line.replace(/"[^"]+"/g, function (match) {
-      match = match.replace("\"", "");
-      match = match.replace("\"", "");
 
-      return match.replace(/,/g, '');
-    });
-    jsObj = commaRemoved.split(',');
+  //   Vai empurrar o 'teste' para o arr
+  arr.push(teste);
+});
 
-
-    countryName = jsObj[0];
-    year = jsObj[4];
-    indCode = jsObj[2];
-
-//If country doesn't exist , add the country as key
-    if(!(countryName in jsonResult)) {
-      //create object with country as key
-      jsonResult[countryName] = {};
-    }
-
-//If the year doesn't exist , add the year as key
-    if(!(year in jsonResult[countryName])) {
-      //Create object with year as key
-      jsonResult[countryName][year] = {};
-    }
-
-    var obj = {};
-    if(jsObj[3]=="SP.DYN.LE00.FE.IN" || jsObj[3]=="SP.DYN.LE00.MA.IN") {
-
-      if(jsObj[3]=="SP.DYN.LE00.FE.IN") {
-        indCode = "female";
-      }else if(jsObj[3]=="SP.DYN.LE00.MA.IN") {
-        indCode = "male";
-      }
-
-      if(!(indCode in jsonResult[countryName][year])) {
-        //Create object with 'indicator name' as key
-        jsonResult[countryName][year][indCode] = jsObj[5];
-      }
-    }
+// Função Assíncrona com o parâmetro 'directory' e 'files'
+async function listFileFromDirectory(directory, files) {
+  // Se a lista n existir vai criar um array dentro da var 'files'
+  if (!files) {
+    files = [];
   }
-});
 
-rl.on('close' , function() {
+  // Vai rodar a função readdirSync() do modulo fs
+  // Vai ter o parâmetro 'directory'
+  let listFiles = fs.readdirSync(directory);
 
-var outputFilename = 'output.json';
-fs.writeFileSync(outputFilename,JSON.stringify(jsonResult,null,4),'utf-8');
-/*fs.writeFile(outputFilename, JSON.stringify(jsonResult, null, 4), function(err) {
-    if(err) {
-      console.log(err);
-    } else {
-      console.log("JSON output file: " + outputFilename);
-    }
-  });*/
-});
+  // Para cada arquivo
+  for (let c in listFiles) {
+    // Vai rodar o stat que retorna algumas informações do arquivo e algumas outras funções
+    // Ela é async, então precisa do await
+    // Recebe um caminho de um diretório
+    let stat = fs.statSync(directory + "/" + listFiles[c]);
+    // Vai verificar se o arquivo é uma pasta
+    if (stat.isDirectory())
+      // Chamando uma função dentro de outra
+      await listFileFromDirectory(directory + "/" + listFiles[c], files);
+    // Vai pegar a lista de arquivo e vai adicionar o arquivo
+    else files.push(directory + "/" + listFiles[c], files);
+  }
+
+  return files;
+
+  // 'files' tá dando o Circular 1
+}
+
+async function test() {
+  // Vai passar como parâmetro o 'directory' - './CSV'
+  let files = await listFileFromDirectory("./CSV");
+  console.log(files);
+}
+
+test();
+
+// -----------------------------------
+
+// Como ler arquivos de uma página específica []
+// Como criar arquivos em uma pasta especifíca []
+// Método para colocar em um objeto []
