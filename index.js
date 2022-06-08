@@ -2,19 +2,20 @@
 const fs = require("fs");
 
 // Função que lista os arquivos do diretório CSV
-function CSVDirectory(csvPath) {
+const CSVDirectory = (csvPath) => {
   // Retorna todos os arquivos
+  // O método readdir serve para ler o conteúdo de determinado diretório
   return fs.readdirSync(csvPath);
-}
+};
 
 // Váriavel para armazenar os arquivos .csv que serão convertidos
+// Além de chamar a função passando o caminho até a pasta CSV
 const files = CSVDirectory("./CSV");
 
 // Um for que vai iterar cada arquivo armazenado na const files
 // No caso vai percorrer com o 'i' até a posição do tamanho do array
 for (let i = 0; i < files.length; i++) {
   // O fs.createReadStream() é um método do fs para ler arquivos
-  // O reader vai receber o files[i] que é a mesma coisa que o caminho até chegar no arquivo
   // O './CSV/' serve para completar o caminho para o método ler
   reader = fs.createReadStream(`./CSV/${files[i]}`);
 
@@ -24,7 +25,7 @@ for (let i = 0; i < files.length; i++) {
   - O segundo é uma função de callback (Ação realizadas cada vez que evento for disparado) 
   */
   reader.on("data", (chunk) => {
-    // Recebe os arquivos iterados do for e transforma eles em string
+    // Retorna em uma string
     let content = chunk.toString();
 
     // Criamos um array que recebe o dado do csv até a quebra de linha
@@ -37,17 +38,17 @@ for (let i = 0; i < files.length; i++) {
 
     // Vai armazenar um array que não conterá o Header, pois vai iniciar
     // com o i = 1, ou seja, na linha abaixo dos cabeçalhos
-    const itemsNewArray = [];
+    const arrayWithoutHeader = [];
 
     // Inicia após a primeira linha. Assim sem o conter os cabeçalhos.
     for (let i = 1; i < items.length; i++) {
       // Vai dividir cada elemento com o string assim que encontrar alguma vírgula
       // Depois colocar em um array
       const itemSplit = items[i].split(",");
-
+      
       // Vai colocar os itens dividos acima em um outro array que armazenará
       // Porém sem que contenha o header ou cabeçalho
-      itemsNewArray.push(itemSplit);
+      arrayWithoutHeader.push(itemSplit);
     }
 
     // Função que irá converter todos os itens em JSON
@@ -60,7 +61,7 @@ for (let i = 0; i < files.length; i++) {
 
       // Fez um map nos itens do Array
       // Vai pesquisar dentro do array o elemento como paramêtro
-      const convertItems = itemsNewArray.map((element) => {
+      const convertItems = arrayWithoutHeader.map((element) => {
         // Vai passar em cada item de cada linha de dentro do Array
         // Abaixo do Header
         for (let index = 0; index < element.length; index++) {
@@ -81,13 +82,13 @@ for (let i = 0; i < files.length; i++) {
       const nameFile = files[i].replace(".csv", ".json");
 
       // O método writeFile vai gravar os dados em um novo arquivo
-      // Ele vai pegar o nome do file 'nameFile' que foi alterado para ser .json no final
-      // Além de colocar o array que contêm os objeto num novo arquivo
-      // Então o arquivo vai ter o nome escolhido e o conteúdo do Array com objetos
-      // stringify ele codifica o arquivo convertido, pois vai ter um desformatado
+      // Direcionar no começo até a pasta './JSON/'
+      // Ele vai pegar o nome do file 'nameFile' (concatenado) que foi alterado para ser .json no final
+      // Replace no 'nameFile' para remover o ./CSV e deixar vazio. Assim deixando apenas o caminho até o JSON
       const result = fs.writeFileSync(
         `./JSON/${nameFile.replace("./CSV", "")}`,
-        JSON.stringify(arrayJSON)
+        // O métodos JSON.stringify converte valores em javascript para uma String JSON.
+        JSON.stringify(arrayJSON, null, 4)
       );
     };
 

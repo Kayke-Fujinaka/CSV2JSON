@@ -1,1 +1,14 @@
-[{"Id":"0","Name":"José","Stack":"FRONT","Age":"21"},{"Id":"1","Name":"Maria","Stack":"BACK","Age":"77"}]
+[
+    {
+        "Id": "0",
+        "Name": "José",
+        "Stack": "FRONT",
+        "Age": "21"
+    },
+    {
+        "Id": "1",
+        "Name": "Maria",
+        "Stack": "BACK",
+        "Age": "77"
+    }
+]
