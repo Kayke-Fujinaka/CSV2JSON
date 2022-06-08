@@ -1,6 +1,6 @@
-Nome,Stack,Idade,Data
-José,FRONT,21,1234
-Maria,BACK,17,1234
-Lucas,FRONT,29,1234
-Silvia,FRONT,31,1234
-Adriana,BACK,25,1234
+Id,Name,Stack,Age,Data,Fruit
+1,José,FRONT,21,12/34,Maçã
+2,Maria,BACK,17,02/04,Pêra
+3,Lucas,FRONT,29,24/12,Banana
+4,Silvia,FRONT,31,04/06,Limão
+5,Adriana,BACK,25,15/08,Manga

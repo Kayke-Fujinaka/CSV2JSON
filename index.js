@@ -1,41 +1,74 @@
 // Incluir o fs module
 const fs = require("fs");
 // O fs.createReadStream() é um método do fs para ler arquivos
-reader = fs.createReadStream("./CSV/exemplo.csv");
 
-// Armazena o resultado da conversão
-let arr = [];
+// Váriavel para armazenar os arquivos .csv
+const files = ['./CSV/exemplo.csv', './CSV/teste.csv']
 
-/* 
-A função on() serve para escutar os eventos do código a qual recebe dois arg
-- O primeiro é o nome do evento "data";
-- O segundo é uma função de callback (Ação realizadas cada vez que evento disparado) 
-*/
-reader.on("data", (chunk) => {
-  // Recebe o arquivo 'exemplo.csv' em string
-  let content = chunk.toString();
+// Um for que vai iterar cada arquivo armazenado do .csv
+for(let i = 0; i < files.length; i++){
+  reader = fs.createReadStream(files[i]);
 
-  // Criamos um array que recebe o dado do csv até a quebra de linha
-  // (no caso define um array de dados por linha)
-  let splitted = content.split("\n");
+  /* 
+  A função on() serve para escutar os eventos do código a qual recebe dois arg
+  - O primeiro é o nome do evento "data";
+  - O segundo é uma função de callback (Ação realizadas cada vez que evento disparado) 
+  */
+  reader.on("data", (chunk) => {
+    // Recebe o arquivo 'exemplo.csv' em string
+    let content = chunk.toString();
+  
+    // Criamos um array que recebe o dado do csv até a quebra de linha
+    // (no caso define um array de dados por linha)
+    let items = content.split("\n");
+  
+    // O Header é o item 0 e ele pega cada item após a vírgula
+    let headers = items[0].split(",");
+  
+    // Criei um array sem o Header 
+    // Inicia após a primeira linha que seria o index[0]
+    const itemsNewArray = [];
+    for (let i = 1; i < items.length; i++) {
+      const itemSplit = items[i].split(",");
+      itemsNewArray.push(itemSplit);
+    }
+  
+    // Função que irá converter todos os itens em JSON
+    const createJson = () => {
+      // Vai armazenar um array de objetos
+      const arrayJson = [];
+  
+      // Vai armazenar os objetos com o Spread Operator
+      let  obj = {};
+  
+      // Fez um map nos itens do Array
+      const convertItems = itemsNewArray.map((element) => {
+        // Vai passar em cada item de cada linha de dentro do Array
+        for (let index = 0; index < element.length; index++) {
+          // Criou um objeto pegando o index de cada for para ir adicionando dentro do Objeto com o Spread Operator
+          const header = headers[index].replace('\r', '');
+          const value = element[index].replace('\r', '');
+          obj = {...obj,[header]:value}
+        }
+        // Pega todo objeto e adiciona no Array
+        arrayJson.push(obj)
+      });
 
-  // Criamos um array que cada cabeçalho do csv
-  // (no caso define um array com os dados da primeira linha)
-  let header = content.split("\n")[0].split(",");
+      // Pegou o nome do arquivo e escreveu mudando para .json
+      const nameFile = files[i].replace('.csv', '.json')
+      // Função que escreve. 
+      // Ele pega o nome do arquivo e o Array. Ai, ele escreve em um arquivo.
+      fs.writeFile(`${nameFile}`, JSON.stringify(arrayJson), err => {
+        if (err) throw err; 
+    });
+    };
+  
+    createJson();
+  });
+}
 
-  // Vai receber o push abaixo e colocar num Array
-  let teste = [];
 
-  // Um for que vai iterar linha por linha do splitted que é o Array com os dados
-  for (let i = 0; i < splitted.length; i++) {
-    // Ele vai empurrar para o 'teste' e dividir as string a cada vírgula
-    teste.push(splitted[i].split(","));
-    for (let index = 0; index < header.length; index++) {}
-  }
-
-  //   Vai empurrar o 'teste' para o arr
-  arr.push(teste);
-});
+// -------------------------
 
 // Função Assíncrona com o parâmetro 'directory' e 'files'
 async function listFileFromDirectory(directory, files) {
@@ -70,13 +103,12 @@ async function listFileFromDirectory(directory, files) {
 async function test() {
   // Vai passar como parâmetro o 'directory' - './CSV'
   let files = await listFileFromDirectory("./CSV");
-  console.log(files);
 }
 
 test();
 
 // -----------------------------------
 
-// Como ler arquivos de uma página específica []
+// Como ler arquivos de uma página específica [QUASE]
 // Como criar arquivos em uma pasta especifíca []
 // Método para colocar em um objeto []
