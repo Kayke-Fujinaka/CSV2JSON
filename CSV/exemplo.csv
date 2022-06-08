@@ -1,6 +1,6 @@
-Id,Name,Stack,Age,Data,Fruit
-1,José,FRONT,21,12/34,Maçã
-2,Maria,BACK,17,02/04,Pêra
-3,Lucas,FRONT,29,24/12,Banana
-4,Silvia,FRONT,31,04/06,Limão
-5,Adriana,BACK,25,15/08,Manga
+Id,Name,Stack,Age,Data,Fruit,Children
+1,José,FRONT,21,12/34,Maçã,0
+2,Maria,BACK,77,02/04,Pêra,3
+3,Lucas,FRONT,29,24/12,Banana,1
+4,Silvia,FRONT,31,04/06,Limão,2
+5,Adriana,BACK,25,15/08,Manga,0
