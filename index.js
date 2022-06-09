@@ -73,6 +73,7 @@ for (let i = 0; i < filesList.length; i++) {
 
           // Criou um objeto pegando o index de cada for
           // para ir adicionando dentro do Objeto com o Spread Operator
+          // Spread Operator serve para criar um objeto apartir de outro objeto existente
           obj = { ...obj, [header]: value };
         }
         // Vai empurrar os objetos para o array 'arrayFilesJSON'
