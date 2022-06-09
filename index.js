@@ -56,7 +56,7 @@ for (let i = 0; i < filesList.length; i++) {
       // Vai armazenar um array de objetos dos itens convertidos em JSON
       const arrayFilesJSON = [];
 
-      // Vai armazenar em um objeto que vai receber com o Spread Operator
+      // Vai armazenar em um objeto o Header correspondente ao Value
       let obj = {};
 
       // Fez um map nos itens do Array
