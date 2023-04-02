@@ -1,57 +1,57 @@
 <h1 align="center">🎈 CSV To JSON</h1>
 
-> 🔎 Conversor de CSV para JSON
+> 🔎 CSV to JSON Converter
 
-## ⚔️ Desafio
+## ⚔️ Challenge
 
-Nesse desafio, você deve conseguir construir um algorítimo que possa pegar arquivos .csv dentro de uma pasta e convertê-los em arquivos .json em uma pasta de saída. Você pode utilizar a linguagem Javascript para resolver. Caso queira fazer um front-end para a aplicação, será um diferencial. Você deve documentar toda a jornada de aprendizado do desafio.
-- Deve ser possível colocar quantos arquivos .csv forem necessários dentro da pasta de entrada;
-- Na pasta de saída, é necessário que todos os arquivos da pasta de entrada sejam convertidos para .json.
+In this challenge, you should be able to build an algorithm that can take .csv files inside a folder and convert them to .json files in an output folder. You can use Javascript language to resolve. If you want to make a front-end for the application, it will be a differential. You must document the entire challenge learning journey.
+- It must be possible to place as many .csv files as necessary inside the input folder;
+- In the output folder, it is necessary that all files in the input folder are converted to .json.
 
 ```bash
-Nome,Stack
-José,FRONT
-Maria,BACK
-Lucas,FRONT
-Silvia,FRONT
+Name, Stack
+Jose, FRONT
+Maria, BACK
+Lucas, FRONT
+Silvia, FRONT
 Adriana,BACK
 ```
 
-## 🚀 Tecnologias ##
+## 🚀 Technologies ##
 
-- [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-## :closed_book: Como usar? ##
+## :closed_book: How to use it? ##
 
-Antes de iniciar, você precisa ter [Git](https://git-scm.com) e [Node](https://nodejs.org/en/) instalados.
+Before starting, you need to have [Git](https://git-scm.com) and [Node](https://nodejs.org/en/) installed.
 
 ```bash
 # Clone this project
 $ git clone https://github.com/Kayke-Fujinaka/CSV2JSON
-# Access
+# access
 $ cd csvtojson
-# Install dependencies
-$ yarn or npm 
+# install dependencies
+$ yarn or npm
 # Run the project
-$ yarn start or npm start 
+$ yarn start or npm start
 # The server will initialize in the <http://localhost:3000>
 ```
 
-## 🤝 Colaboradores
+## 🤝 Collaborators
 
-Agradecemos às seguintes pessoas que contribuíram para este projeto:
+Thanks to the following people who contributed to this project:
 
 <table>
   <tr>
     <td align="center">
       <a href="#">
-        <img src="https://avatars.githubusercontent.com/u/98772000?s=400&u=80de9af672be7f75cc7a546838552cf63d5b82fe&v=4" width="160px;" alt="Foto do Kayke Fujinaka no GitHub"/><br>
+        <img src="https://avatars.githubusercontent.com/u/98772000?s=400&u=80de9af672be7f75cc7a546838552cf63d5b82fe&v=4" width="160px;" alt="Photo by Kayke Fujinaka on GitHub"/><br>
         <sub>
           <b>Kayke Fujinaka</b>
         </sub>
       </a>
-    </td>
+    </all>
   </tr>
 </table>
 
-<a href="#top">Volte para o topo</a>
+<a href="#top">Go back to top</a>
